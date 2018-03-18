@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="utf-8" />
-<title>SocialNetworkActivity</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<title>SocialMediaStudentActivity</title><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
 <style type="text/css">
@@ -11771,6 +11771,16 @@ div#notebook {
   <div tabindex="-1" id="notebook" class="border-box-sizing">
     <div class="container" id="notebook-container">
 
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Goal">Goal<a class="anchor-link" href="#Goal">&#182;</a></h3><p>As we have learned, measuring network dispersion between two individuals is a decent way of identifying whether a romantic relationship may be present. In this activity we aim to teach you how to calculate this dispersion value.</p>
+<p>Furthermore, you will apply this measurement to a close friend within your Facebook friends in an attempt to "guess" who their romantic partner may be.</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
@@ -11789,25 +11799,18 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Collect-Data">Collect Data<a class="anchor-link" href="#Collect-Data">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Get data from <a href="https://lostcircles.com/">https://lostcircles.com/</a>. Download JSON(no pics) after up finish loading your network. Run the following function to get a adjacency list. One thing about the json file is that some edges only have one directions recorded but we should add both directions to the adj list.</p>
+<h3 id="Collect-Data">Collect Data<a class="anchor-link" href="#Collect-Data">&#182;</a></h3><p>To get started, collect your own data from <a href="https://lostcircles.com/">https://lostcircles.com/</a>. Download JSON(no pics) after up finish loading your network. Run the following function to get a adjacency list. One thing about the json file is that some edges only have one directions recorded but we should add both directions to the adj list.</p>
+<p>We have included the code for generating your personal adjacency list down below. Simply fill in your own file path once you get that, and then run the cell to fill the "adj_list" variable.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;fb_network.json&#39;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;YOUR_FILE_PATH_TO_LOSTCIRCLES_FILE_HERE.json&#39;</span> <span class="c1"># Replace this with your own file path</span>
 
 <span class="k">def</span> <span class="nf">process_json</span><span class="p">(</span><span class="n">path</span><span class="p">):</span> <span class="c1"># Parse the json file into adjacency list and node list</span>
     <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">path</span><span class="p">))</span>
@@ -11843,41 +11846,33 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Tie-Strength">Tie Strength<a class="anchor-link" href="#Tie-Strength">&#182;</a></h1>
+<h3 id="Selecting-Some-Friends">Selecting Some Friends<a class="anchor-link" href="#Selecting-Some-Friends">&#182;</a></h3><p>Next you should select two close friends from your Facebook network. In this section we are going to attempt to calculate the dispersion value between two individuals.</p>
+<p>For the best results, the two friends you select should have a high amount of mutual friends which you are also mutual friends with.</p>
+<p>Two select these two friends, fill in the name variables below. Make sure to spell their names correctly and exactly as they are shown on Facebook. After that, run the cell. The result will be the two variables fIndex1 and fIndex2 which correspond to the index in the adjacency list of the first friend and the index for the second friend.</p>
+
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>    <span class="c1">## You can look up the index using a user&#39;s name</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Andrew Cui&#39;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
-    <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">friend1</span> <span class="o">=</span> <span class="s2">&quot;Friend Name&quot;</span> <span class="c1"># --- FILL IN: Choose friend names from facebook</span>
+<span class="n">friend2</span> <span class="o">=</span> <span class="s2">&quot;Friend Name&quot;</span>
+
+<span class="k">def</span> <span class="nf">getFriendIndex</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">i</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">friend1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">c</span>
+        <span class="n">c</span> <span class="o">+=</span> <span class="mi">1</span>
+    
+<span class="n">fIndex1</span> <span class="o">=</span> <span class="n">getFriendIndex</span><span class="p">(</span><span class="n">friend1</span><span class="p">)</span> <span class="c1">#Index in adjacency list of friend 1</span>
+<span class="n">fIndex2</span> <span class="o">=</span> <span class="n">getFriendIndex</span><span class="p">(</span><span class="n">friend2</span><span class="p">)</span> <span class="c1">#Index in adjacency list of friend 2</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>11
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -11886,57 +11881,34 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Then we try to implement all the math functions mentioned in the paper.</p>
+<h3 id="Calculating-Dispersion-Between-Two-People">Calculating Dispersion Between Two People<a class="anchor-link" href="#Calculating-Dispersion-Between-Two-People">&#182;</a></h3><p>In this section we will calculate the dispersion between the two friends you have found. To do this, we have included the skeletons of three essential algorithms. Your task is to complete these three algorithms. Once you have done that you will be able to find the dispersion value between your selected friends.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">common_neighbor</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">):</span>  <span class="c1">#Find the list of common neighbors of node1 and node2</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">nei</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">node1</span><span class="p">]:</span>
-        <span class="k">if</span> <span class="n">nei</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">node2</span><span class="p">]:</span>
-            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nei</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">result</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># --- Finish this function ---</span>
+<span class="k">def</span> <span class="nf">common_neighbor</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">):</span>  <span class="c1">#Find the list of common neighbors of node1 and node2\</span>
+    <span class="c1"># declare a list to store results</span>
+    <span class="c1"># loop through the neighbors of node1</span>
+    <span class="c1">#   if neighbor is in neighbors of node2</span>
+    <span class="c1">#      add neighbor to result list</span>
+    <span class="c1"># return results</span>
 
-
-<span class="k">def</span> <span class="nf">dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">normalized</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span> <span class="c1">#Calculate the dispersion</span>
-    <span class="n">common_nei</span> <span class="o">=</span> <span class="n">common_neighbor</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">)</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)):</span>
-            <span class="n">result</span> <span class="o">+=</span> <span class="n">distance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="n">adj_list</span><span class="p">,</span> <span class="n">common_nei</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">common_nei</span><span class="p">[</span><span class="n">j</span><span class="p">])</span> <span class="c1">#Distance function gives 1 or 0</span>
-    <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># If the two nodes have less or equal to 1 mutual friends, we set the dispersion to 0</span>
-            <span class="k">return</span> <span class="mi">0</span>
-        <span class="k">return</span> <span class="n">result</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span>
-
-    <span class="k">return</span> <span class="n">result</span>    <span class="c1"># If not normalized, return the result directly</span>
-
+    
 <span class="k">def</span> <span class="nf">distance</span><span class="p">(</span><span class="n">threshold</span><span class="p">,</span> <span class="n">adj_list</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span> 
     <span class="c1"># Use BFS to check if distance between u and v are within threshold, return 1 when dist &gt; threshold, 0 when &lt;=</span>
-    
-    <span class="c1"># if len(common_neighbor(adj_list, u, v)) &gt; 2:</span>
-    <span class="c1">#   return 0 </span>
-    
-    <span class="c1"># The previous two lines: according to the paper, we should consider the distance to be 0 if the two nodes have</span>
-    <span class="c1"># mutual friends other than the two nodes we are calculating dispersion of.</span>
-    
-    <span class="c1"># We are ignoring this rule in this activity since our own fb network has limited scale</span>
-
     <span class="n">queue</span> <span class="o">=</span> <span class="n">deque</span><span class="p">([</span><span class="n">u</span><span class="p">])</span> <span class="c1"># Queue data structure</span>
     <span class="n">explored</span> <span class="o">=</span> <span class="p">{</span><span class="n">u</span><span class="p">}</span> <span class="c1"># Set data structure for O(1) lookup</span>
     <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">):</span>
         <span class="n">cur_layer</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
-        <span class="c1"># We record the number of nodes in the current layer, so we can keep track of how many layers we have explored</span>
-        <span class="c1"># E.g. if the threshold is 3, we only want to explore if v is within 3 layers of u.</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cur_layer</span><span class="p">):</span>  
-            <span class="c1"># In the for loop, we explore all nodes in current layer.</span>
+        
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">cur_layer</span><span class="p">):</span>
             <span class="n">cur</span> <span class="o">=</span> <span class="n">queue</span><span class="o">.</span><span class="n">popleft</span><span class="p">()</span>
             <span class="k">for</span> <span class="n">nei</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="p">[</span><span class="n">cur</span><span class="p">]:</span>
                 <span class="k">if</span> <span class="n">nei</span> <span class="o">==</span> <span class="n">v</span><span class="p">:</span>
@@ -11945,321 +11917,47 @@ div#notebook {
                     <span class="n">queue</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nei</span><span class="p">)</span>
                     <span class="n">explored</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">nei</span><span class="p">)</span>
                     
-        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span> 
-    <span class="k">return</span> <span class="mi">1</span>  <span class="c1"># This means we did not find v within 3 layers of u, so the distance should be 1.</span>
-</pre></div>
+        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="mi">1</span>
 
-</div>
-</div>
-</div>
 
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[5]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adj</span> <span class="o">=</span> <span class="p">{}</span>   <span class="c1"># This is the graph in the slide, used for testing</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;e&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;f&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;g&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;j&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">]</span>
-<span class="n">adj</span><span class="p">[</span><span class="s1">&#39;u&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="s1">&#39;j&#39;</span><span class="p">,</span> <span class="s1">&#39;k&#39;</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">distance</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">adj</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[6]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>'a' and 'b' are not directly connected.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[7]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersion</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[7]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>4</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[8]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersion</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="s1">&#39;h&#39;</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[8]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>1.0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The dispersion and normalized dispersion between h and u are 4 and 1.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[9]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nodes</span><span class="p">[</span><span class="mi">11</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[9]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;dataUrl&#39;: &#39;&#39;,
- &#39;id&#39;: &#39;100009517843209&#39;,
- &#39;name&#39;: &#39;Andrew Cui&#39;,
- &#39;profile&#39;: &#39;https://www.facebook.com/andrew.cui.75?fref=pb&amp;hc_location=friends_tab&#39;,
- &#39;userName&#39;: &#39;andrew.cui.75&#39;}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nodes</span><span class="p">[</span><span class="mi">30</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[10]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;dataUrl&#39;: &#39;&#39;,
- &#39;id&#39;: &#39;100004068944907&#39;,
- &#39;name&#39;: &#39;Ayoub Belemlih&#39;,
- &#39;profile&#39;: &#39;https://www.facebook.com/belemlih.ayoub?fref=pb&amp;hc_location=friends_tab&#39;,
- &#39;userName&#39;: &#39;belemlih.ayoub&#39;}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[11]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[11]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>155</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[12]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[12]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>5.0</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">recursive_dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_iterations</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
-    <span class="n">values</span> <span class="o">=</span> <span class="p">{}</span>  <span class="c1"># dictionary with [nodeX : [1, dispersion after 1 recursion, dispersion after 2 recursions...]]</span>
-    <span class="k">for</span> <span class="n">nei</span> <span class="ow">in</span> <span class="n">adj_list</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>   <span class="c1"># Initialize all the dispersion values to be list with only 1</span>
-        <span class="k">if</span> <span class="n">nei</span> <span class="o">!=</span> <span class="n">node</span><span class="p">:</span>
-            <span class="n">values</span><span class="p">[</span><span class="n">nei</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="c1"># --- Finish this function ---</span>
+<span class="k">def</span> <span class="nf">dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node1</span><span class="p">,</span> <span class="n">node2</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">normalized</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span> <span class="c1">#Calculate the dispersion</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">______</span> <span class="c1"># FILL IN: initialize dispersion result variable</span>
+    <span class="n">common_nei</span> <span class="o">=</span> <span class="n">______</span> <span class="c1"># FILL IN: get common neighbors of node1 and node2 from previous function</span>
     
-    <span class="n">iteration_num</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">while</span> <span class="n">iteration_num</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">:</span>   <span class="c1"># Run a certain number of recursions</span>
-        <span class="k">for</span> <span class="n">nei</span> <span class="ow">in</span> <span class="n">values</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>  
-            <span class="n">values</span><span class="p">[</span><span class="n">nei</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">helper</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">nei</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">,</span> <span class="n">threshold</span><span class="p">))</span> 
-            <span class="c1"># Use the equation and the previous round of dispersion values to calculate the new dispersion value for</span>
-            <span class="c1"># node nei. Then append the new value to the list of nei.</span>
-        <span class="n">iteration_num</span> <span class="o">+=</span> <span class="mi">1</span>
-        
-    <span class="k">return</span> <span class="n">values</span>  <span class="c1"># Return the dictionary</span>
+    <span class="c1">#loop through common neighbors with index i</span>
+    <span class="c1">#   loop through common neighbors with index j</span>
+    <span class="c1">#          result += distance between node1 and node2</span>
+    
+    <span class="k">if</span> <span class="n">normalized</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span>
 
+    <span class="c1"># return result</span>
+</pre></div>
 
-<span class="k">def</span> <span class="nf">helper</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>  
-    <span class="c1"># This helper function is the math equation given in the paper</span>
+</div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Calculate-Max-Dispersion">Calculate Max Dispersion<a class="anchor-link" href="#Calculate-Max-Dispersion">&#182;</a></h3><p>In this section you will calculate the maximum dispersion for one of your friends in your network. To do this, fill out the function below. We have provided two helper functions to assist in your calculations.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">dispersionEqn</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">iteration_num</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
     <span class="n">common_nei</span> <span class="o">=</span> <span class="n">common_neighbor</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">common_nei</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
         <span class="k">return</span> <span class="mi">0</span>
@@ -12276,134 +11974,31 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">find_max_dispersion</span><span class="p">(</span><span class="n">dispersions</span><span class="p">):</span>
-    <span class="c1"># Find the key according to the largest dispersion value</span>
     <span class="n">result</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">max_dispersion</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">dispersions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
         <span class="k">if</span> <span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">max_dispersion</span><span class="p">:</span>
-            <span class="n">max_dispersion</span> <span class="o">=</span> <span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="c1">#Compare the last number in each list</span>
+            <span class="n">max_dispersion</span> <span class="o">=</span> <span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">][</span><span class="nb">len</span><span class="p">(</span><span class="n">dispersions</span><span class="p">[</span><span class="n">key</span><span class="p">])</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="c1">#compare the last number and find the max</span>
             <span class="n">result</span> <span class="o">=</span> <span class="n">key</span>
     <span class="k">return</span> <span class="n">result</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersions_test</span> <span class="o">=</span> <span class="n">recursive_dispersion</span><span class="p">(</span><span class="n">adj</span><span class="p">,</span> <span class="s1">&#39;u&#39;</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>  <span class="mi">1</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Test it on the graph in the slide: We use max_iterations = 3 since the paper says it gives the best result. Threshold is set to be 1 (directly connected). We look for the dispersion values between all other nodes and u.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersions_test</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
 
 
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;a&#39;: [1, 1.0, 9.0, 120.2],
- &#39;b&#39;: [1, 3.0, 7.8, 314.104],
- &#39;c&#39;: [1, 3.0, 13.4, 336.0172839506173],
- &#39;d&#39;: [1, 1.0, 9.0, 139.98666666666668],
- &#39;e&#39;: [1, 1.0, 9.0, 120.2],
- &#39;f&#39;: [1, 3.0, 13.4, 336.0172839506173],
- &#39;g&#39;: [1, 0, 0, 0],
- &#39;h&#39;: [1, 3.0, 13.444444444444445, 199.94419753086422],
- &#39;i&#39;: [1, 1.0, 1.888888888888889, 17.839506172839506],
- &#39;j&#39;: [1, 1.6666666666666667, 5.666666666666667, 79.559670781893],
- &#39;k&#39;: [1, 1.0, 1.888888888888889, 17.839506172839506]}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The last values in the lists are the results after 3 iterations.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">find_max_dispersion</span><span class="p">(</span><span class="n">dispersions_test</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[16]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;c&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersions</span> <span class="o">=</span> <span class="n">recursive_dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1"># --- Finish this function ---</span>
+<span class="k">def</span> <span class="nf">recursive_dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">max_iterations</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="n">disp_values</span> <span class="o">=</span> <span class="n">_____</span> <span class="c1"># declare empty dict. This will hold the dispersion values for </span>
+                        <span class="c1"># each user. You are building these values up one by one</span>
+    
+    <span class="c1"># Loop through neighbor adjacency list. For any node that is not the target node, add it to our values</span>
+    <span class="c1"># dictionary and set its dispersion value to 1 (for now)</span>
+    
+    <span class="n">iteration_num</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">while</span> <span class="n">iteration_num</span> <span class="o">&lt;</span> <span class="n">max_iterations</span><span class="p">:</span>
+        <span class="c1"># loop through all neighbors in values (Loop through keys)</span>
+        <span class="c1">#    for each neighbor, calculate the dispersion using the dispersionEqn helper function. </span>
+        <span class="c1">#    Append this dispersion value to the END of the dispersion values dict</span>
+        <span class="c1"># increment number of iterations</span>
+    
+    <span class="k">return</span> <span class="n">disp_values</span>
 </pre></div>
 
 </div>
@@ -12415,442 +12010,32 @@ div#notebook {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Run the recursive dispersion function on your own fb network starting with one of your friend. I am using 11: Andrew Cui here. (You will not be in your own network)</p>
+<p>Once you have finished the recursive_dispersion method above, try running the following cell with a friend of your choice. Your algorithm should return a different friend which has the highest dispersion value with your input friend.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">dispersions</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">target_friend</span> <span class="o">=</span> <span class="s2">&quot;Friend Name&quot;</span>
+<span class="n">friendIndex</span> <span class="o">=</span> <span class="n">getFriendIndex</span><span class="p">(</span><span class="n">target_friend</span><span class="p">)</span>
+<span class="n">num_recursions</span> <span class="o">=</span> <span class="mi">3</span> <span class="c1"># This value determines how many recursions our recursive dispersion function will undergo. </span>
+                   <span class="c1"># The paper we read stated that 3 recursions provides a good balance between accuracy and speed</span>
+
+<span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># How many degrees of separation two nodes must be to not be considered neighbors. # Higher threshold</span>
+              <span class="c1"># means you are only looking at nodes where mutual friends are further apart</span>
+    
+<span class="n">dispersions</span> <span class="o">=</span> <span class="n">recursive_dispersion</span><span class="p">(</span><span class="n">adj_list</span><span class="p">,</span> <span class="n">friendIndex</span><span class="p">,</span> <span class="n">num_recursions</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+
+<span class="c1"># Final result: The output of this will state which person has the highest dispersion value with the target friend you </span>
+<span class="c1"># selected.</span>
+<span class="n">nodes</span><span class="p">[</span><span class="n">find_max_dispersion</span><span class="p">(</span><span class="n">dispersions</span><span class="p">)]</span>
 </pre></div>
 
 </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[18]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{0: [1, 17.13953488372093, 5167.573150509105, 512880296.06353384],
- 1: [1, 0, 0, 0],
- 2: [1, 19.325581395348838, 5053.959658260692, 534150213.11327785],
- 3: [1, 13.235294117647058, 5224.906952643313, 478369513.5862104],
- 4: [1, 22.59259259259259, 7256.642483296797, 750275451.3137587],
- 5: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 6: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 7: [1, 1.0, 1148.622314049587, 84415023.31589775],
- 8: [1, 29.545454545454547, 9335.620715263272, 938684753.3203942],
- 9: [1, 12.090909090909092, 3946.381220025741, 366938805.79666495],
- 10: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 12: [1, 24.89090909090909, 7938.226199238651, 778159360.4452263],
- 13: [1, 25.0, 8548.92248155026, 877129119.263357],
- 14: [1, 4.428571428571429, 885.6377721204581, 93847020.21700935],
- 15: [1, 8.538461538461538, 3333.8265510145916, 319110298.08345026],
- 16: [1, 41.2, 10858.894467406419, 1121683216.724293],
- 17: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 18: [1, 10.185185185185185, 3436.3725436603445, 333460255.40138054],
- 19: [1, 3.5, 839.0193565995513, 78495633.13679902],
- 20: [1, 19.181818181818183, 5571.830758926625, 562441095.3257667],
- 21: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 22: [1, 8.545454545454545, 2981.1633506541857, 285008449.09877646],
- 23: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 24: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 25: [1, 14.297297297297296, 4432.334851302661, 427121853.0391487],
- 26: [1, 2.3333333333333335, 940.6158105430046, 66333907.605786115],
- 27: [1, 9.181818181818182, 3926.7555883190457, 359559685.8819838],
- 28: [1, 11.785714285714286, 3725.7275852793887, 357994556.9251691],
- 29: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 30: [1, 11.0, 4735.065139636248, 441909010.007378],
- 31: [1, 0, 0, 0],
- 32: [1, 19.583333333333332, 7145.24636679073, 715491450.9838535],
- 33: [1, 1.0, 1148.622314049587, 84415023.31589775],
- 34: [1, 2.3333333333333335, 966.6263085992132, 86135735.69876607],
- 35: [1, 0, 0, 0],
- 36: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 37: [1, 4.0, 940.8448156919748, 92395951.68516909],
- 38: [1, 0, 0, 0],
- 39: [1, 42.66265060240964, 11318.388286507383, 1165243732.9167428],
- 40: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 41: [1, 16.05, 4959.37610155716, 513719535.7366477],
- 42: [1, 27.87719298245614, 7280.360272739168, 788707413.7361941],
- 43: [1, 2.8461538461538463, 1598.026663945778, 142846882.34362677],
- 44: [1, 32.25, 8788.60778278666, 885356357.8321987],
- 45: [1, 45.19277108433735, 11503.762184315225, 1209908519.361654],
- 46: [1, 0, 0, 0],
- 47: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 49: [1, 12.8125, 4233.870167023579, 424306772.3569322],
- 50: [1, 20.03846153846154, 6453.757528570241, 627213958.7762704],
- 51: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 52: [1, 28.93846153846154, 9566.28318781743, 992603793.8374316],
- 53: [1, 1.0, 851.4422222222223, 59400173.5786566],
- 54: [1, 1.0, 851.4422222222223, 59400173.5786566],
- 55: [1, 18.361702127659573, 6095.911072536555, 594362100.3695437],
- 56: [1, 3.857142857142857, 965.1567673775056, 97830587.11096945],
- 57: [1, 5.222222222222222, 2339.1669140523036, 199735937.54076672],
- 58: [1, 9.588235294117647, 4544.7378275218, 446102769.0169199],
- 59: [1, 19.50980392156863, 7046.6518299930485, 688964520.2100558],
- 60: [1, 24.490909090909092, 7135.436747496664, 775305265.5393786],
- 61: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 62: [1, 13.054054054054054, 4119.446939190718, 381386780.97280014],
- 63: [1, 5.7272727272727275, 2000.6812199790693, 178750169.4319506],
- 64: [1, 24.071428571428573, 6247.725100337301, 635194087.7625468],
- 65: [1, 21.49056603773585, 7457.387886941185, 737845414.3994514],
- 66: [1, 8.84, 3676.3615372570207, 361612202.6571522],
- 67: [1, 26.1864406779661, 8802.948913028276, 864423961.3211792],
- 68: [1, 20.318181818181817, 7295.491419825592, 687435119.1863533],
- 69: [1, 9.533333333333333, 3762.72731669657, 339473247.2872251],
- 70: [1, 0, 0, 0],
- 71: [1, 2.0, 359.76999081726353, 32611312.46010954],
- 72: [1, 2.0, 660.4573684464898, 55066892.87734988],
- 73: [1, 1.0, 851.4422222222223, 59400173.5786566],
- 74: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 75: [1, 5.833333333333333, 2389.716701714314, 209427232.17027807],
- 76: [1, 6.333333333333333, 2056.410801220473, 189299384.5915592],
- 77: [1, 14.954545454545455, 5798.985547318734, 558253659.1898996],
- 78: [1, 7.086956521739131, 2289.879773100008, 224583192.4481144],
- 79: [1, 14.720930232558139, 5650.77801111025, 569272666.7185354],
- 80: [1, 2.0, 704.180382944905, 60317324.15925118],
- 81: [1, 0, 0, 0],
- 82: [1, 2.0, 47.96975673898751, 6874565.005117067],
- 83: [1, 3.6666666666666665, 714.1346177155237, 75975966.48297511],
- 84: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 85: [1, 39.44155844155844, 10684.13914979118, 1119939793.872788],
- 86: [1, 1.0, 851.4422222222223, 59400173.5786566],
- 87: [1, 1.0, 526.15625, 38971790.12020348],
- 88: [1, 0, 0, 0],
- 89: [1, 2.3333333333333335, 650.0348571062411, 57673971.91071979],
- 90: [1, 8.444444444444445, 2709.7012152385905, 283941226.45096916],
- 91: [1, 7.526315789473684, 2621.7310523670167, 227316785.61136493],
- 92: [1, 4.217391304347826, 1665.9198361361534, 136953719.51520467],
- 93: [1, 13.580645161290322, 3750.0729332958485, 373196418.9287824],
- 94: [1, 5.428571428571429, 3068.6392052056776, 244056942.18500826],
- 95: [1, 8.8, 3320.385581727877, 323875120.0642773],
- 96: [1, 0, 0, 0],
- 97: [1, 12.297297297297296, 4691.498609655232, 428714290.5031812],
- 98: [1, 4.6, 1662.0253426881686, 162872544.02091014],
- 99: [1, 14.555555555555555, 5181.965903326753, 513574206.6768144],
- 100: [1, 9.296296296296296, 3353.661262092731, 332081633.2546684],
- 101: [1, 12.294117647058824, 3705.655186044497, 356535834.7263556],
- 102: [1, 10.285714285714286, 3196.5909405038788, 297103382.20949894],
- 103: [1, 7.0, 2670.833653890598, 244436454.7267439],
- 104: [1, 9.214285714285714, 3131.744407846097, 273492141.84833974],
- 105: [1, 18.6, 5480.730143942388, 530410562.33280194],
- 106: [1, 7.903225806451613, 2018.3398351166672, 192357156.81635982],
- 107: [1, 16.170731707317074, 5289.846595415277, 532011162.6903037],
- 108: [1, 4.809523809523809, 1769.2378341534331, 164342303.6837689],
- 109: [1, 7.857142857142857, 2369.8241324730084, 223767965.4218116],
- 110: [1, 16.243243243243242, 4828.9984728878, 480778088.1431098],
- 111: [1, 0, 0, 0],
- 112: [1, 11.114285714285714, 4560.927276755595, 435431339.121337],
- 113: [1, 9.25, 3332.1649188990255, 342133429.7748366],
- 114: [1, 15.512820512820513, 4343.537426544413, 440662788.85329074],
- 115: [1, 6.037037037037037, 2421.1833690285466, 215848154.07349664],
- 116: [1, 36.71830985915493, 10002.390065820322, 1046586657.6361909],
- 117: [1, 23.08, 6124.366907661876, 617309162.0234001],
- 118: [1, 0, 0, 0],
- 119: [1, 15.27027027027027, 4792.407565329704, 462173997.2086401],
- 120: [1, 0, 0, 0],
- 121: [1, 8.9, 2400.1898696539347, 221431320.89580375],
- 122: [1, 25.413793103448278, 7392.490342379257, 749052203.3745217],
- 123: [1, 24.966666666666665, 8263.558800526362, 841947950.4079498],
- 124: [1, 25.5, 7423.017857957112, 753441401.0992608],
- 125: [1, 15.368421052631579, 4068.6974854630557, 409584320.7358949],
- 126: [1, 0, 0, 0],
- 127: [1, 0, 0, 0],
- 128: [1, 12.647058823529411, 4410.155820097913, 430544868.872808],
- 129: [1, 24.770491803278688, 8885.123312048532, 894340332.9783584],
- 130: [1, 23.214285714285715, 7340.865645203406, 679509024.8737555],
- 131: [1, 22.25, 8142.682479618319, 803912662.6874678],
- 132: [1, 30.823529411764707, 9718.475410027007, 998420103.6267804],
- 133: [1, 16.692307692307693, 4698.79992021504, 456052847.4425535],
- 134: [1, 4.857142857142857, 2687.353058471693, 229530465.9554041],
- 135: [1, 0, 0, 0],
- 136: [1, 0, 0, 0],
- 137: [1, 8.909090909090908, 3217.176100818305, 308208596.89272875],
- 138: [1, 0, 0, 0],
- 139: [1, 0, 0, 0],
- 140: [1, 6.0, 2047.5102433838813, 179209728.4538697],
- 141: [1, 24.678571428571427, 7585.213051114005, 765665276.6953571],
- 142: [1, 8.043478260869565, 2938.2170535699147, 255786664.6631646],
- 143: [1, 11.709677419354838, 3840.0853381078673, 367693885.89275247],
- 144: [1, 0, 0, 0],
- 145: [1, 2.0, 1274.0060895248816, 119296287.7622439],
- 146: [1, 7.444444444444445, 2158.0019067652725, 202050228.37104282],
- 147: [1, 6.642857142857143, 2078.828392219896, 185987573.29968652],
- 148: [1, 12.842105263157896, 5224.943015545205, 482938886.96416926],
- 149: [1, 0, 0, 0],
- 150: [1, 38.68, 10190.808613193893, 1038689069.7212064],
- 151: [1, 27.0, 9452.605969946178, 946854468.1734234],
- 152: [1, 0, 0, 0],
- 153: [1, 0, 0, 0],
- 154: [1, 30.87878787878788, 9083.588890709332, 945040820.9119982],
- 155: [1, 22.649122807017545, 7680.260399149212, 794274924.9300748],
- 156: [1, 31.317460317460316, 8452.794365043177, 933962002.4379961],
- 157: [1, 10.096774193548388, 3616.033298790288, 320892105.29186976],
- 158: [1, 27.71875, 8260.018638824464, 829558430.8534062],
- 159: [1, 19.0, 6440.691102403417, 585864160.3836366],
- 160: [1, 18.020408163265305, 6268.864877693443, 613025548.9472433],
- 161: [1, 30.441176470588236, 8693.500777463756, 864087598.6980747],
- 162: [1, 18.125, 6607.537395639123, 655660536.1268004],
- 163: [1, 21.77777777777778, 5720.8440406905065, 582591919.4551467],
- 164: [1, 27.885245901639344, 8189.7996806608235, 870541392.3729905],
- 165: [1, 23.862068965517242, 6570.949721075802, 678837847.6991261],
- 166: [1, 17.97872340425532, 5746.298262169683, 567685363.4837654],
- 167: [1, 13.238095238095237, 4732.008087115241, 460811536.2183366],
- 168: [1, 11.972972972972974, 4728.523676600773, 493743822.1092559],
- 169: [1, 8.052631578947368, 2433.0717763941047, 235040009.74974352],
- 170: [1, 0, 0, 0],
- 171: [1, 0, 0, 0],
- 172: [1, 0, 0, 0],
- 173: [1, 22.11111111111111, 6530.176858882218, 671614448.7084268],
- 174: [1, 0, 0, 0],
- 175: [1, 0, 0, 0],
- 176: [1, 14.047619047619047, 4570.670362557582, 474577633.10843],
- 177: [1, 0, 0, 0],
- 178: [1, 0, 0, 0],
- 179: [1, 0, 0, 0],
- 180: [1, 0, 0, 0],
- 181: [1, 0, 0, 0],
- 182: [1, 0, 0, 0],
- 183: [1, 0, 0, 0],
- 184: [1, 0, 0, 0],
- 185: [1, 0, 0, 0],
- 186: [1, 0, 0, 0],
- 187: [1, 0, 0, 0],
- 188: [1, 2.3333333333333335, 384.09999387817567, 35190516.89478717],
- 189: [1, 1.0, 234.74367346938777, 25420230.26728598],
- 190: [1, 0, 0, 0],
- 191: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 192: [1, 0, 0, 0],
- 193: [1, 18.92, 7002.66923757943, 701908343.0437602],
- 194: [1, 7.761904761904762, 3424.43043751576, 300454387.0328162],
- 195: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 196: [1, 0, 0, 0],
- 197: [1, 3.0, 1069.2846518446956, 95454519.09867465],
- 198: [1, 0, 0, 0],
- 199: [1, 25.9, 7957.0387928132195, 854456708.064913],
- 200: [1, 11.838709677419354, 4655.627067606418, 421488695.68424225],
- 201: [1, 1.6666666666666667, 805.6599938781759, 61046071.3248296],
- 202: [1, 4.428571428571429, 1199.4161559266827, 110091581.0741028],
- 203: [1, 25.033898305084747, 7687.852284986268, 831649772.8310627],
- 205: [1, 0, 0, 0],
- 206: [1, 1.0, 703.2199930713027, 48823445.2351025],
- 207: [1, 0, 0, 0],
- 208: [1, 0, 0, 0],
- 209: [1, 0, 0, 0],
- 210: [1, 0, 0, 0],
- 211: [1, 0, 0, 0],
- 212: [1, 0, 0, 0],
- 213: [1, 0, 0, 0],
- 215: [1, 0, 0, 0],
- 216: [1, 0, 0, 0],
- 217: [1, 0, 0, 0],
- 218: [1, 9.0, 2959.6228849864387, 280249017.39983535],
- 219: [1, 3.9, 1127.4702213356056, 106791419.1443392],
- 220: [1, 1.0, 88.58483379501386, 14001991.49822167],
- 221: [1, 13.424242424242424, 5072.304627463259, 475114095.7368119],
- 222: [1, 7.1, 2474.5234490328767, 247451572.91174087],
- 223: [1, 15.307692307692308, 5267.475530292467, 519255802.8712304],
- 224: [1, 0, 0, 0],
- 225: [1, 7.461538461538462, 2767.3661217530703, 271712078.85359824],
- 226: [1, 0, 0, 0],
- 227: [1, 0, 0, 0],
- 228: [1, 0, 0, 0],
- 229: [1, 0, 0, 0],
- 230: [1, 0, 0, 0],
- 231: [1, 0, 0, 0],
- 232: [1, 0, 0, 0],
- 233: [1, 0, 0, 0],
- 234: [1, 0, 0, 0],
- 235: [1, 0, 0, 0],
- 236: [1, 0, 0, 0],
- 237: [1, 0, 0, 0],
- 238: [1, 18.555555555555557, 6302.156512373133, 618567489.4194889],
- 239: [1, 17.17142857142857, 4456.921196735841, 495271267.2914747],
- 240: [1, 1.0, 12.25, 604329.2646928929],
- 241: [1, 3.2857142857142856, 969.0177534919669, 80609887.56667638],
- 242: [1, 12.9, 3169.8882360899834, 292728122.4634817],
- 243: [1, 3.0, 1728.5236760330579, 147036498.83657172],
- 244: [1, 0, 0, 0],
- 245: [1, 10.0, 4121.023147068155, 383593437.0701819],
- 246: [1, 0, 0, 0],
- 247: [1, 0, 0, 0],
- 248: [1, 0, 0, 0],
- 249: [1, 0, 0, 0],
- 250: [1, 0, 0, 0],
- 251: [1, 1.0, 135.05849400904344, 14141431.973758698],
- 252: [1, 0, 0, 0],
- 253: [1, 1.0, 12.25, 604329.2646928929],
- 254: [1, 9.129032258064516, 3798.6070575754634, 372678579.9406773],
- 255: [1, 0, 0, 0],
- 256: [1, 7.761904761904762, 2230.1792205343654, 208322291.02671894],
- 257: [1, 1.0, 12.25, 604329.2646928929],
- 258: [1, 0, 0, 0],
- 259: [1, 0, 0, 0],
- 260: [1, 5.555555555555555, 1672.9917568671467, 152046544.21862718],
- 261: [1, 0, 0, 0],
- 262: [1, 0, 0, 0],
- 263: [1, 14.681818181818182, 5549.000415174014, 560949471.7444546],
- 264: [1, 1.0, 12.25, 604329.2646928929],
- 266: [1, 0, 0, 0],
- 267: [1, 0, 0, 0],
- 268: [1, 0, 0, 0],
- 269: [1, 0, 0, 0],
- 270: [1, 1.0, 12.25, 604329.2646928929],
- 271: [1, 0, 0, 0],
- 272: [1, 1.0, 12.25, 604329.2646928929],
- 273: [1, 0, 0, 0],
- 274: [1, 0, 0, 0],
- 275: [1, 1.0, 12.25, 604329.2646928929],
- 276: [1, 0, 0, 0],
- 277: [1, 0, 0, 0],
- 278: [1, 1.0, 12.25, 604329.2646928929],
- 279: [1, 2.0, 169.36763038548753, 18382302.969895612],
- 280: [1, 2.3333333333333335, 459.1138985005767, 34575274.158342965],
- 281: [1, 0, 0, 0],
- 282: [1, 0, 0, 0],
- 283: [1, 1.0, 12.25, 604329.2646928929],
- 284: [1, 1.5, 634.2279081364733, 46143984.209398545],
- 285: [1, 1.0, 12.25, 604329.2646928929],
- 286: [1, 0, 0, 0],
- 287: [1, 0, 0, 0],
- 288: [1, 3.5, 710.4259628117914, 51140733.95849483],
- 289: [1, 0, 0, 0],
- 290: [1, 0, 0, 0],
- 291: [1, 0, 0, 0],
- 292: [1, 1.0, 12.25, 604329.2646928929],
- 293: [1, 2.3333333333333335, 8.166666666666666, 402886.1764619286],
- 294: [1, 1.0, 12.25, 604329.2646928929],
- 295: [1, 14.904761904761905, 5352.9564216161625, 528367652.3339338],
- 296: [1, 1.0, 12.25, 604329.2646928929],
- 297: [1, 0, 0, 0],
- 298: [1, 0, 0, 0],
- 299: [1, 0, 0, 0],
- 300: [1, 0, 0, 0],
- 301: [1, 0, 0, 0],
- 302: [1, 0, 0, 0],
- 303: [1, 0, 0, 0],
- 304: [1, 0, 0, 0],
- 305: [1, 0, 0, 0],
- 306: [1, 0, 0, 0],
- 307: [1, 1.0, 12.25, 604329.2646928929],
- 308: [1, 0, 0, 0],
- 309: [1, 2.3333333333333335, 8.166666666666666, 402886.1764619286],
- 310: [1, 0, 0, 0],
- 311: [1, 0, 0, 0],
- 312: [1, 0, 0, 0],
- 313: [1, 0, 0, 0],
- 314: [1, 0, 0, 0],
- 315: [1, 0, 0, 0],
- 316: [1, 0, 0, 0],
- 317: [1, 0, 0, 0],
- 318: [1, 0, 0, 0],
- 319: [1, 0, 0, 0],
- 320: [1, 0, 0, 0],
- 321: [1, 1.0, 12.25, 604329.2646928929],
- 322: [1, 2.0, 490.3916603678508, 35724866.28885284],
- 323: [1, 1.0, 12.25, 604329.2646928929],
- 324: [1, 0, 0, 0],
- 325: [1, 0, 0, 0],
- 326: [1, 0, 0, 0],
- 327: [1, 1.0, 12.25, 604329.2646928929],
- 328: [1, 0, 0, 0],
- 329: [1, 0, 0, 0],
- 330: [1, 1.0, 12.25, 604329.2646928929],
- 331: [1, 0, 0, 0],
- 332: [1, 0, 0, 0],
- 333: [1, 0, 0, 0],
- 334: [1, 2.0, 153.95946712018142, 14632371.42877719],
- 335: [1, 0, 0, 0],
- 336: [1, 0, 0, 0],
- 337: [1, 0, 0, 0]}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">find_max_dispersion</span><span class="p">(</span><span class="n">dispersions</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[19]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>45</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">nodes</span><span class="p">[</span><span class="mi">45</span><span class="p">]</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-<div class="prompt output_prompt">Out[20]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;dataUrl&#39;: &#39;&#39;,
- &#39;id&#39;: &#39;100001107732647&#39;,
- &#39;name&#39;: &#39;Jongwon Han&#39;,
- &#39;profile&#39;: &#39;https://www.facebook.com/hans.jongwon?fref=pb&amp;hc_location=friends_tab&#39;,
- &#39;userName&#39;: &#39;hans.jongwon&#39;}</pre>
-</div>
-
-</div>
-
 </div>
 </div>
 

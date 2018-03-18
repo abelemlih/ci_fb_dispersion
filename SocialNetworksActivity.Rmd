@@ -1,0 +1,62 @@
+---
+title: "SocialNetworksActivity"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(jsonlite)
+library(tidyverse)
+```
+
+### Collect Data
+
+Get data from https://lostcircles.com/. Download JSON(no pics) after up finish loading your network. Run the following function to get a adjacency list. One thing about the json file is that some edges only have one directions recorded but we should add both directions to the adj list.
+
+```{r}
+data <- fromJSON("fb_network.json")
+nodes <- data$nodes
+links <- data$links
+```
+
+```{r}
+nodes <- nodes %>%
+  mutate(index = 0:(nrow(nodes)-1)) %>%
+  select(index, name)
+```
+
+```{r}
+map_neighbors <- function(node) {
+  neighbors <- links %>%
+    filter(source == node | target == node)
+  neighbors <- unique(c(neighbors$source, neighbors$target))
+  neighbors[neighbors != node]
+}
+
+common_neighbors <- function(node1, node2) {
+  intersect(map_neighbors(node1), map_neighbors(node2))
+}
+
+distance <- function(threshold, node1, node2) {
+  unexplored <- c(nod1)
+  explored <- c(node1)
+  layer <- 0
+  while (length(unexplored) == 0 & layer <= threshold) {
+    v_num <- length(unexplored)
+    for (i in 1:v_num) {
+      current_node <- unexplored[1]
+      neighbors <- map_neighbors(current_node)
+      if(node2 %in% neighbors) return(0)
+      unexplored_neighbors <- neighbors[!neighbors %in% explored]
+      unexplored <- c(unexplored[-1], unexplored_neighbors)
+      explored <- c(explored, neighbors[!neighbors %in% explored])
+    }
+    layer <- layer + 1
+  }
+  1
+}
+```
+

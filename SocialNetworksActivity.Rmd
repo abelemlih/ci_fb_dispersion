@@ -37,48 +37,27 @@ map_neighbors <- function(data, node) {
   neighbors[neighbors != node]
 }
 
-common_neighbors <- function(data, node1, node2, exclude = NULL) {
-  cn <- intersect(map_neighbors(data, node1), map_neighbors(data, node2))
-  if (!is.null(exclude)) return(cn[!cn %in% exclude])
-  cn
+common_neighbors <- function(data, node1, node2) {
+  intersect(map_neighbors(data, node1), map_neighbors(data, node2))
 }
 
-distance <- function(data, u, v, node1, node2, threshold = 1) {
+distance <- function(data, node1, node2, threshold = 1) {
   #no common neighbors between the vertices node1 and node2
-  cn <- common_neighbors(data, node1, node2, exclude = c(u,v))
-  if(length(cn) > 0) return(0)
-  
-  #checking if node1 and node2 satisfy the distance threshold
-  unexplored <- c(node1)
-  explored <- c(node1)
-  layer <- 0
-  while (length(unexplored) != 0 & layer < threshold) {
-    v_num <- length(unexplored)
-    for (i in 1:v_num) {
-      current_node <- unexplored[1]
-      neighbors <- map_neighbors(data, current_node)
-      if(node2 %in% neighbors) return(0)
-      unexplored_neighbors <- neighbors[!neighbors %in% explored]
-      unexplored <- c(unexplored[-1], unexplored_neighbors)
-      explored <- c(explored, unexplored_neighbors)
-    }
-    layer <- layer + 1
-  }
-  1
+  #cn <- common_neighbors(data, node1, node2)
+  #if(length(cn) > 2) return(0)
+  ifelse(node1 %in% map_neighbors(data, node2), 0, 1)
 }
 
-dispersion <- function(data, u, v, threshold = 1, normalized = FALSE) {
+dispersion <- function(data, u, v, normalized = FALSE) {
   cn <- data %>% common_neighbors(u, v) 
   if(length(cn) <= 1) return(0)
   
-  cn_grid <- cn %>% utils::combn(2)
-  result <- 
-    1:(length(cn_grid)/2) %>%
-    as.integer() %>%
-    map(function(x) distance(data, u, v, cn_grid[,x][1], cn_grid[,x][2])) %>% 
-    flatten_dbl() %>% 
-    sum()
-  
+  result <- 0
+  for(i in 1:(length(cn)-1)) {
+    for(j in (i+1):length(cn)) {
+      result <- result + distance(data, cn[i], cn[j])
+    }
+  }
   if(normalized) return(result/length(cn))
   result
 }
@@ -86,60 +65,44 @@ dispersion <- function(data, u, v, threshold = 1, normalized = FALSE) {
 
 ```{r}
 tdata <- read.csv("testing_graph.csv", header = TRUE, stringsAsFactors = FALSE)
-tdata %>% distance('h', 'u', 'c', 'j')
-tdata %>% distance('h', 'u', 'c', 'f')
+tdata %>% distance('c', 'j')
+tdata %>% distance('c', 'f')
 tdata %>% dispersion('u', 'h')
 tdata %>% dispersion('u', 'b')
 ```
 
-```{r}
-#dsp <- c()
-#smpl <- links %>% sample_n(5000)
-#for(i in 1:nrow(smpl)) {
-  #dsp <- c(dsp, links %>% dispersion(sample[i,]$source, sample[i,]$target))
-#}
-#smpl <- smpl %>% mutate(dispersion = dsp) %>% arrange(desc(dispersion))
-```
-
-```{r}
-rdisp_1 <- function(data, disp, cn, u, v, threshold = 1) {
-  disp %>% 
-    filter(node2 %in% cn) %>% 
-    pull(-1) %>% 
-    map(function(x) x^2) %>% 
-    flatten_dbl() %>% 
-    sum()
-}
-
-rdisp_2 <- function(data, disp, cn, u, v, threshold = 1) {
-  result <- 0
-  for(i in 1:(length(cn)-1)) {
-    for(j in (i+1):length(cn)) {
-      p <- disp %>% filter(node2 %in% c(cn[i], cn[j])) %>% pull(-1) %>% prod()
-      result <- result + 2*p*distance(data, u, v, cn[i], cn[j])
-    }
-  }
-  result
-}
-
-rdisp <- function(data, disp, u, v, threshold = 1) {
+```{r, cache=TRUE}
+rdisp <- function(data, disp, u, v) {
   cn <- common_neighbors(data, u, v)
   if(length(cn)<=1) return(0)
   
-  (rdisp_1(data, disp, cn, u, v) + rdisp_2(data, disp, cn, u, v))/length(cn)
+  result <- 0
+  for (i in 1:length(cn)) {
+    result <- result + (disp[cn[i]+1, length(disp)])^2
+  }
+  
+  for(i in 1:(length(cn)-1)) {
+    for(j in (i+1):length(cn)) {
+      p <- c(disp[cn[i]+1, length(disp)], disp[cn[j]+1, length(disp)]) %>% prod()
+      result <- result + 2*p*distance(data, cn[i], cn[j])
+    }
+  }
+  result/length(cn)
 }
 
-recursive_dispersion <- function(data, disp, max_iter = 1) {
+recursive_dispersion <- function(data, u, max_iter = 1) {
+  disp <- data.frame(node1 = u, node2 = nodes$node, it0 = 1)
   for (i in 1:max_iter) {
-    new_iter <- disp$node2 %>%
-      map(function(x) rdisp(data, disp, disp[1,1], x)) %>%
-      flatten_dbl()
+    new_iter <- c()
+    for (j in disp$node2) {
+      new_iter <- c(new_iter, rdisp(data, disp, disp[1,1], disp[j+1, 2]))
+    }
     disp[paste('iter', i, sep = '')] <- new_iter
   }
   disp
 }
 
-disp_df <- data.frame(node1 = 11, node2 = nodes$node[nodes$node != 11], it0 = 1)
-df <- links %>% recursive_dispersion(disp_df, max_iter = 3)
+
+df <- links %>% recursive_dispersion(11, max_iter = 1)
 ```
 

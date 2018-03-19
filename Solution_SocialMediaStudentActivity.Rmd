@@ -1,0 +1,199 @@
+---
+title: "SocialNetworksActivity"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(jsonlite)
+library(dplyr)
+library(purrr)
+library(igraph)
+```
+
+### Goal
+
+As we have learned, measuring network dispersion between two individuals is a decent way of identifying whether a romantic relationship may be present. In this activity we aim to teach you how to calculate this dispersion value. 
+
+Furthermore, you will apply this measurement to a close friend within your Facebook friends in an attempt to "guess" who their romantic partner may be. 
+
+### Collect Data
+
+To get started, collect your own data from https://lostcircles.com/. Download JSON(no pics) after up finish loading your network. Run the following chunk to get a the nodes and links tables. Simply fill in your own file path to generate the tables:
+
+```{r}
+data <- fromJSON("fb_network.json")
+links <- data$links
+nodes <- data$nodes
+
+links <- links %>%
+  mutate(source = source + 1, target = target + 1)
+
+nodes <- nodes %>% 
+  mutate(full_name = name, name = seq(1, nrow(nodes))) %>%
+  select(name, full_name)
+```
+
+### Selecting Some Friends
+
+Next you should select two close friends from your Facebook network. In this section we are going to attempt to calculate the dispersion value between two individuals. 
+
+For the best results, the two friends you select should have a high amount of mutual friends who you are also mutual friends with. 
+
+To find the indices of the friends you selected, you can run the following chunk:
+
+```{r}
+nodes %>% filter(full_name %in% c("friend_1", "friend_2"))
+```
+
+`name` is the attribute used by `igraph` as the index for the vertices.
+
+### Core Functions
+
+Generate the graph from the links and nodes tables using `igraph`:
+
+```{r}
+fbg <- graph_from_data_frame(links, directed = FALSE, vertices = nodes)
+```
+
+Get the direct neighbors of a vertex (the list returned includes the vertex itself):
+
+```{r}
+ego(fbg, 1, 31)[[1]]
+```
+
+Find the common neighbors of two vertices:
+
+```{r}
+intersection(neighbors(fbg, 31), neighbors(fbg, 12))
+```
+
+### Calculating Dispersion Between Two People
+
+In this section we will calculate the dispersion between the two friends you have found. To do this, we have included the skeletons of two algorithms. Your task is to complete these two algorithms. Once you have done that you will be able to find the dispersion value between your selected friends.
+
+Distance between two vertices, based on the implementation from the paper:
+
+```{r}
+# --- Complete this function ---
+distance <- function(graph, v1, v2, threshold = 1) {
+  # @param graph: the graph generated using igraph
+  # @param v1, v2: the vertices to compute the distance for
+  # @param threshold: the distance threshold, 1 by default
+  # Use the igraph functions to find the neighbors of v2 with respect to the treshold
+  # Check if v1 is a neighbor of v2 with respect to the treshold
+  # If the distance between v1 and v2 is above the treshold, return 1
+  # Otherwise, return 0
+  
+  # According to the paper, we should consider the distance to be 0 if the two nodes have
+  # mutual friends other than the two nodes we are calculating dispersion of.
+  # We are ignoring this rule in this activity since our own fb network has limited scale
+  # if (intersection(neighbors(graph, v1), neighbors(graph, v2)) %>% length() > 2) return(0)
+  
+  (!v1 %in% ego(graph, threshold, v2)[[1]]) %>%
+    as.integer()
+}
+```
+
+Dispersion between two vertices:
+
+```{r}
+# --- Complete this function ---
+dispersion <- function(graph, v1, v2, threshold = 1, normalized = FALSE) {
+  # @param graph: the graph generated using igraph
+  # @param v1, v2: the vertices to compute the dispersion for
+  # @param threshold: the distance threshold, 1 by default
+  # Loop over all the common neighbors of v1 and v2 and return the sum of their distances
+  # When normalized, the sum of distances is divided by the number of common neighbors
+  # If the vertices have one or no common neighbors, the dispersion should be set to 0
+  cn <- intersection(neighbors(graph, v1), neighbors(graph, v2))
+  if (length(cn) <= 1) return(0)
+  
+  result <- 0
+  for(i in seq(1, length(cn)-1)) {
+    for(j in seq(i+1, length(cn))) {
+      result <- result + distance(graph, cn[i], cn[j])
+    }
+  }
+  if(normalized) return(result/length(cn))
+  result
+}
+```
+
+### Calculate Max Dispersion
+
+In this section you will calculate the maximum dispersion for one of your friends in your network. To do this, fill out the functions below. We have provided a helper function to facilitate dispersion calculation. Computing the recursive dispersion is slower in R, so we recommend being patient especially for very large graphs.
+
+* The number of recursion iterations determines how many recursions our recursive dispersion function will undergo. The paper we read stated that 3 recursions provides a good balance between accuracy and speed.
+
+* The distance threshold determines how many degrees of separation two nodes must be to not be considered neighbors. A higher threshold means you are only looking at nodes where mutual friends are further apart.
+
+Recursive dispersion between two vertices:
+
+```{r}
+rdisp <- function(graph, df, v1, v2, threshold = 1) {
+  # @param graph: the graph generated using igraph
+  # @param df: the dataframe that contains all dispersion values from previous iterations
+  # This dataframe is initialized with one column of iteration values equal to 1
+  # @param v1, v2: the vertices to compute the dispersion for
+  # @param threshold: the distance threshold, 1 by default
+  cn <- intersection(neighbors(graph, v1), neighbors(graph, v2))
+  cn_num <- length(cn)
+  last_col <- ncol(df)
+  result <- 0
+  if (cn_num <= 1) return(0)
+  
+  for(i in seq(1, cn_num - 1)) {
+    result <- result + (df[cn[i], last_col])^2
+    for(j in seq(i + 1, cn_num)) {
+      p <- c(df[cn[i], last_col], df[cn[j], last_col]) %>% prod()
+      result <- result + 2*p*distance(graph, cn[i], cn[j], threshold)
+    }
+  }
+  (result + (df[cn[cn_num], last_col])^2)/cn_num
+}
+
+# --- Complete this function ---
+recursive_dispersion <- function(graph, u, max_iter = 1, threshold = 1) {
+  # @param graph: the graph generated using igraph
+  # @param u: the vertex to compute the recursive dispersion for
+  # @param max_iter: the number of iterations to run
+  # @param threshold: the distance threshold, 1 by default
+  df <- data.frame(v1 = u, v2 = nodes$name, iter0 = 1)
+  for (i in 1:max_iter) {
+    # iterate through every vertex in the column v2 of the dataframe df
+    # compute the dispersion between that vertex and the main vertex u using the function above
+    # add the all the dispersion calculations as a new column in df
+    df[paste('iter', i, sep = '')] <-
+      df$v2 %>% 
+      map(function(x) rdisp(fbg, df, u, df[x, 2], threshold)) %>% 
+      flatten_dbl()
+  }
+  df %>% filter(v2 != u)
+}
+```
+
+```{r}
+# Uncomment when recursive_dispersion is complete
+dispersions <- recursive_dispersion(fbg, 31, max_iter = 1)
+
+# --- Complete this chunk ---
+# Filter the dispersions data frame to find the vertex with highest dispersion value
+# Only consider the values from the last column in the data frame, which matches the values from the last recursion iteration
+# For instance, if only one recursion iteration was processed, 
+# you should filter by the column that contains the dispersion values from that column.
+# Based on this implementation, it will always be the last column in the data frame
+
+# In our example, we only ran one iteration of the recursive dispersion
+max_dispersion <- dispersions %>% filter(iter1 == max(dispersions$iter1))
+max_dispersion
+nodes %>% filter(name == max_dispersion$v2[1])
+```
+
+
+
+
+

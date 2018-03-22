@@ -129,12 +129,12 @@ library(purrr)
 library(igraph)</code></pre>
 <div id="goal" class="section level3">
 <h3>Goal</h3>
-<p>As we have learned, measuring network dispersion between two individuals is a decent way of identifying whether a romantic relationship may be present. In this activity we aim to teach you how to calculate this dispersion value.</p>
-<p>Furthermore, you will apply this measurement to a close friend within your Facebook friends in an attempt to “guess” who their romantic partner may be.</p>
+<p>As we have learned, measuring network dispersion between two individuals is a decent way of identifying whether a romantic relationship may be present. In this activity, you will implement functions to calculate the dispersion value between two vertices.</p>
+<p>If you finish early, there is an additional challenge section where you will finish implementing the recursive dispersion function, and calculate the maximum dispersion to predict the partner of a user.</p>
 </div>
 <div id="collect-data" class="section level3">
 <h3>Collect Data</h3>
-<p>To get started, collect your own data from <a href="https://lostcircles.com/" class="uri">https://lostcircles.com/</a>. Download JSON(no pics) after up finish loading your network. Run the following chunk to get a the nodes and links tables. Simply fill in your own file path to generate the tables:</p>
+<p>To get started, collect your own data from <a href="https://lostcircles.com/" class="uri">https://lostcircles.com/</a>. Download the data (select JSON(no pics)) after loading your network. Run the following chunk to get the nodes and links data frames. Simply fill in your own file path to generate the data frames:</p>
 <pre class="r"><code>data &lt;- fromJSON(&quot;YOUR_FILE_PATH_TO_LOSTCIRCLES_FILE_HERE.json&quot;)
 
 links &lt;- data$links %&gt;%
@@ -143,6 +143,7 @@ links &lt;- data$links %&gt;%
 nodes &lt;- data$nodes %&gt;% 
   mutate(full_name = name, name = seq(1, nrow(nodes))) %&gt;%
   select(name, full_name)</code></pre>
+<p><code>name</code> is the attribute used by <code>igraph</code> as the index for the vertices.</p>
 </div>
 <div id="selecting-some-friends" class="section level3">
 <h3>Selecting Some Friends</h3>
@@ -150,39 +151,44 @@ nodes &lt;- data$nodes %&gt;%
 <p>For the best results, the two friends you select should have a high amount of mutual friends who you are also mutual friends with.</p>
 <p>To find the indices of the friends you selected, you can run the following chunk:</p>
 <pre class="r"><code>nodes %&gt;% filter(full_name %in% c(&quot;friend_1&quot;, &quot;friend_2&quot;))</code></pre>
-<p><code>name</code> is the attribute used by <code>igraph</code> as the index for the vertices.</p>
 </div>
-<div id="core-functions" class="section level3">
-<h3>Core Functions</h3>
+<div id="core-igraph-functions" class="section level3">
+<h3>Core <code>igraph</code> Functions</h3>
 <p>Generate the graph from the links and nodes tables using <code>igraph</code>:</p>
 <pre class="r"><code>fbg &lt;- graph_from_data_frame(links, directed = FALSE, vertices = nodes)</code></pre>
 <p>Get the direct neighbors of a vertex (the list returned includes the vertex itself):</p>
 <pre class="r"><code>ego(fbg, 1, 31)[[1]]</code></pre>
+<p>Notice that the treshold in this case is 1, meaning we are looking for vertices 1 edge away from vertex 31. If we were interested in all vertices, one or two edges away from vertex 31, the threshold will be 2, and the command to run is <code>ego(fbg, 2, 31)[[1]]</code>.</p>
+<p><strong>Task</strong>: Find the direct neighbors of the two friends you selected. Note: only the indices of the vertices that represent your friends should be used.</p>
+<pre class="r"><code># --- Complete this chunk ---</code></pre>
 <p>Find the common neighbors of two vertices:</p>
 <pre class="r"><code>intersection(neighbors(fbg, 31), neighbors(fbg, 12))</code></pre>
+<p><strong>Task</strong>: Find the common friends of the two friends you selected.</p>
+<pre class="r"><code># --- Complete this chunk ---</code></pre>
 </div>
-<div id="calculating-dispersion-between-two-people" class="section level3">
-<h3>Calculating Dispersion Between Two People</h3>
-<p>In this section we will calculate the dispersion between the two friends you have found. To do this, we have included the skeletons of two algorithms. Your task is to complete these two algorithms. Once you have done that you will be able to find the dispersion value between your selected friends.</p>
-<p>Distance between two vertices, based on the implementation from the paper:</p>
+<div id="calculating-dispersion-between-two-vertices" class="section level3">
+<h3>Calculating Dispersion Between Two Vertices</h3>
+<p>In this section we will calculate the dispersion between the two friends you have found. Your task is to complete these two algorithms. Once you have done that you will be able to find the dispersion value between your selected friends.</p>
+<p><strong>Task</strong>: Implement the distance function</p>
 <pre class="r"><code># --- Complete this function ---
 distance &lt;- function(graph, v1, v2, threshold = 1) {
   # @param graph: the graph generated using igraph
-  # @param v1, v2: the vertices to compute the distance for
-  # @param threshold: the distance threshold, 1 by default
+  # @param v1, v2: the vertices to compute the distance for. (int)
+  # @param threshold: the distance threshold, 1 by default. (int)
+  
   # Use the igraph functions to find the neighbors of v2 with respect to the treshold
-  # Check if v1 is a neighbor of v2 with respect to the treshold
-  # If the distance between v1 and v2 is above the treshold, return 1
+  # Check if v1 belongs to the neighbors of v2
+  # If v1 does not belong to the neighbors of v2 (distance between v1 and v2 above threshold), return 1
   # Otherwise, return 0
   
   # ...
 }</code></pre>
-<p>Dispersion between two vertices:</p>
+<p><strong>Task</strong>: Implement the dispersion function</p>
 <pre class="r"><code># --- Complete this function ---
 dispersion &lt;- function(graph, v1, v2, threshold = 1, normalized = FALSE) {
   # @param graph: the graph generated using igraph
-  # @param v1, v2: the vertices to compute the dispersion for
-  # @param threshold: the distance threshold, 1 by default
+  # @param v1, v2: the vertices to compute the dispersion for (int)
+  # @param threshold: the distance threshold, 1 by default (int)
   # Loop over all the common neighbors of v1 and v2 and return the sum of their distances
   # When normalized, the sum of distances is divided by the number of common neighbors
   # If the vertices have one or no common neighbors, the dispersion should be set to 0
@@ -190,16 +196,30 @@ dispersion &lt;- function(graph, v1, v2, threshold = 1, normalized = FALSE) {
   if (length(cn) &lt;= 1) return(0)
   # ...
 }</code></pre>
+<p><strong>Testing</strong>: make sure you get the correct value for each one of the following tests. The correct test values are shown in the comments above each command.</p>
+<pre class="r"><code>testing_links &lt;- read.csv(&quot;https://raw.githubusercontent.com/abelemlih/ci_fb_dispersion/master/testing_graph.csv&quot;, header = TRUE, stringsAsFactors = FALSE)
+testing_nodes &lt;- data.frame(name = c(letters[1:11], 'u'))
+testing_graph &lt;- graph_from_data_frame(testing_links, directed = FALSE, vertices = testing_nodes)</code></pre>
+<pre class="r"><code># distance between u and h should equal 0 (threshold = 1)
+distance(testing_graph, V(testing_graph)['u'], V(testing_graph)['h'], threshold = 1)</code></pre>
+<pre class="r"><code># distance between a and h should equal 1 (threshold = 1)
+distance(testing_graph, V(testing_graph)['a'], V(testing_graph)['h'], threshold = 1)</code></pre>
+<pre class="r"><code># distance between c and j should equal 0 (threshold = 2)
+distance(testing_graph, V(testing_graph)['c'], V(testing_graph)['j'], threshold = 2)</code></pre>
+<p><strong>Task</strong>: Find the dispersion value of the vertices that represent the friends you selected at the start of the activity</p>
+<pre class="r"><code># --- Complete this chunk ---</code></pre>
 </div>
-<div id="calculate-max-dispersion" class="section level3">
-<h3>Calculate Max Dispersion</h3>
+<div id="challenge-calculate-max-dispersion-using-recursive-dispersion" class="section level3">
+<h3>Challenge: Calculate max dispersion using recursive dispersion</h3>
 <p>In this section you will calculate the maximum dispersion for one of your friends in your network. To do this, fill out the functions below. We have provided a helper function to facilitate dispersion calculation. Computing the recursive dispersion is slower in R, so we recommend being patient especially for very large graphs.</p>
 <ul>
 <li><p>The number of recursion iterations determines how many recursions our recursive dispersion function will undergo. The paper we read stated that 3 recursions provides a good balance between accuracy and speed.</p></li>
 <li><p>The distance threshold determines how many degrees of separation two nodes must be to not be considered neighbors. A higher threshold means you are only looking at nodes where mutual friends are further apart.</p></li>
 </ul>
-<p>Recursive dispersion between two vertices:</p>
+<p><strong>Task</strong> Finish implementing the recursive dispersion function:</p>
 <pre class="r"><code>rdisp &lt;- function(graph, df, v1, v2, threshold = 1) {
+  # This function computes the recursive dispersion between two vertices
+  # The last column of the data frame df must contain dispersion values from the last recursive iteration
   # @param graph: the graph generated using igraph
   # @param df: the dataframe that contains all dispersion values from previous iterations
   # This dataframe is initialized with one column of iteration values equal to 1
@@ -236,6 +256,7 @@ recursive_dispersion &lt;- function(graph, u, max_iter = 1, threshold = 1) {
   }
   df %&gt;% filter(v2 != u)
 }</code></pre>
+<p><strong>Task</strong> Find the friend with the maximum recursive dispersion:</p>
 <pre class="r"><code># Uncomment when recursive_dispersion is complete
 # dispersions &lt;- recursive_dispersion(fbg, 12, max_iter = 1)
 
@@ -243,8 +264,7 @@ recursive_dispersion &lt;- function(graph, u, max_iter = 1, threshold = 1) {
 # Filter the dispersions data frame to find the vertex with highest dispersion value
 # Only consider the values from the last column in the data frame, which matches the values from the last recursion iteration
 # For instance, if only one recursion iteration was processed, 
-# you should filter using the dispersion values from that column.
-# Based on this implementation, it will always be the last column in the data frame</code></pre>
+# you should filter using the dispersion values from iter1.</code></pre>
 </div>
 
 

@@ -98,6 +98,29 @@ distance <- function(graph, v1, v2, threshold = 1) {
 }
 ```
 
+**Testing**
+
+```{r}
+testing_links <- read.csv("https://raw.githubusercontent.com/abelemlih/ci_fb_dispersion/master/testing_graph.csv", header = TRUE, stringsAsFactors = FALSE)
+testing_nodes <- data.frame(name = c(letters[1:11], 'u'))
+testing_graph <- graph_from_data_frame(testing_links, directed = FALSE, vertices = testing_nodes)
+```     
+
+```{r}
+# distance between u and h should equal 0 (threshold = 1)
+distance(testing_graph, V(testing_graph)['u'], V(testing_graph)['h'], threshold = 1)
+```
+
+```{r}
+# distance between a and h should equal 1 (threshold = 1)
+distance(testing_graph, V(testing_graph)['a'], V(testing_graph)['h'], threshold = 1)
+```
+
+```{r}
+# distance between c and j should equal 0 (threshold = 2)
+distance(testing_graph, V(testing_graph)['c'], V(testing_graph)['j'], threshold = 2)
+```
+
 Dispersion between two vertices:
 
 ```{r}
